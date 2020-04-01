@@ -1,2 +1,2 @@
-INSERT INTO user_posts (user_id, post)
-VALUES ($1, $2);
+INSERT INTO user_posts (title, img, content, author_id)
+VALUES ($1, $2, $3, $4);

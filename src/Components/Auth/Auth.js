@@ -21,7 +21,7 @@ class Auth extends React.Component{
 
    handleLogin = () => {
       const {username, password} = this.state;
-      axios.post("/api/login", {username, password}).then(res => {
+      axios.post("/api/auth/login", {username, password}).then(res => {
          this.props.getUser(res.data) 
          this.props.history.push("/dashboard")
       }).catch(err => console.log(err))
@@ -29,7 +29,7 @@ class Auth extends React.Component{
 
    handleRegister = () => {
       const {username, password} = this.state;
-      axios.post("/api/register", {username, password}).then(res => {
+      axios.post("/api/auth/register", {username, password}).then(res => {
          this.props.getUser(res.data);
          this.props.history.push("/dashboard");
       }).catch(err => console.log(err))
@@ -40,11 +40,11 @@ class Auth extends React.Component{
          <div>
             <div>
                <h3> Username </h3>
-               <input placeHolder="username" 
+               <input placeholder="username" 
                      name="username"
                      onChange={(event) => this.handleInput(event)}/>
                <h3> Password </h3>
-               <input placeHolder="password" 
+               <input placeholder="password" 
                      type="password" 
                      name="password"
                      onChange={(event) => this.handleInput(event)}/>

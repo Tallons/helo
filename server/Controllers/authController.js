@@ -6,8 +6,8 @@ module.exports = {
             db = req.app.get("db");
             console.log(req.body)
             
-            let user = await db.auth.check_user(username);
-            console.log(user[0])
+      let user = await db.auth.check_user(username);
+      console.log(user[0])
 
          if(user[0]){
             return res.status(400).send("username already exists")
@@ -16,6 +16,8 @@ module.exports = {
           hash = bcrypt.hashSync(password, salt),
           newUser = await db.auth.register_user({username, password: hash});
             req.session.user = newUser[0];
+            req.session.userid = newUser[0].user_id;
+            console.log(req.session.userid);
             res.status(201).send(req.session.user)
    },
 
@@ -35,6 +37,8 @@ module.exports = {
 
       delete user[0].password;
       req.session.user = user[0];
+      req.session.userid = user[0].user_id;
+      console.log(req.session.userid);
       res.status(202).send(req.session.user);
    },
 

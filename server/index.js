@@ -3,8 +3,8 @@ require("dotenv").config();
          massive = require("massive"),
          session = require("express-session"),
          {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env,
-         ctrl = require("./Controllers/controller"),
-         postCtrl = require("./Controllers/postController.js")
+         authCtrl = require("./Controllers/authController"),
+         postCtrl = require("./Controllers/postController")
          port = SERVER_PORT,
          app = express();
 
@@ -25,12 +25,16 @@ require("dotenv").config();
    });
 
    //authentication endpoints
-   app.post("/api/register", ctrl.register);
-   app.post("/api/login", ctrl.login);
-   app.get("/api/logout", ctrl.logout);
+   app.post("/api/auth/register", authCtrl.register);
+   app.post("/api/auth/login", authCtrl.login);
+   app.post("/api/auth/logout", authCtrl.logout);
 
    //user post endpoints
+   app.get("/api/posts", postCtrl.getPosts); // remove?
    app.post("/api/posts", postCtrl.createPost);
+   app.get("/api/posts/:userid", postCtrl.getUserPosts);
+   app.delete("/api/post/:postid", postCtrl.deletePost)
+   app.get("/api/post/:postid", postCtrl.getPost);
 
    
    app.listen(port, () => console.log("Server is on Port " + port));
