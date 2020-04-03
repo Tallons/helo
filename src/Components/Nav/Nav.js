@@ -41,5 +41,6 @@ class Nav extends React.Component{
       )
    }
 }
-   const mapStateToProps = (reduxState) => reduxState;
+   const mapStateToProps = (reduxState) => reduxState
+
 export default withRouter(connect(mapStateToProps)(Nav));

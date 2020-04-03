@@ -19,9 +19,10 @@ class Form extends React.Component{
 
    createPost(){
       const {title, img, content} = this.state,
-            {userid} = this.props
-      axios.post('/api/post', {title, img, content, userid}).
-      then(()=>{
+            {user_id} = this.props.user
+            console.log(this.props.user.user_id)
+      axios.post('/api/post', {title, img, content, user_id}).
+      then(() => {
          this.props.history.push("/dashboard")
       })
    }
@@ -32,10 +33,10 @@ class Form extends React.Component{
             <input value={this.state.title} name="title" onChange={(event) => this.handleChange(event)} placeholder="title"/>
             <input value={this.state.img} name="img"  height="300px" onChange={(event) => this.handleChange(event)} placeholder="img"/>
             <input value={this.state.content} name="content" onChange={(event) => this.handleChange(event)} placeholder="content"/>
-            <button>Post</button>
+            <button onClick={() => this.createPost()}>Post</button>
          </div>
       )
    }
 }
-const mapStateToProps = reduxState => ({userid:reduxState.userid})
+const mapStateToProps = reduxState => reduxState
 export default connect(mapStateToProps)(Form);

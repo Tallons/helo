@@ -10,7 +10,6 @@ class Auth extends React.Component{
       this.state = {
          username: "",
          password: "",
-         input: "",
          registerView: false
       }
    }

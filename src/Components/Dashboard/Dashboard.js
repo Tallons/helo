@@ -1,5 +1,4 @@
 import React from "react";
-import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import axios from "axios";
 
@@ -53,6 +52,5 @@ class Dashboard extends React.Component {
    }
 }
 
-const mapStateToProps = reduxState => ({userId: reduxState.userId})
 
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;
