@@ -12,6 +12,10 @@ export function getUser(userObj){
    };
 };
 
+// export function User({
+
+// });
+
 export default function reducer (state = initialState, action) {
 
    const {type, payload} = action;

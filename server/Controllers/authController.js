@@ -45,5 +45,15 @@ module.exports = {
    logout: (req,res) => {
       req.session.destroy();
       res.sendStatus(200);
+   },
+
+   getUserInfo: (req,res) => {
+      console.log("get User: ", req.session.userid);
+      const {userid} = req.session,
+            db = req.app.get("db");
+
+         db.auth.get_user_info(userid)
+         .then(userInfo => {console.log(userInfo), res.status(200).send(userInfo)})
+         .catch(err => res.status(500).send(err));
    }
 }

@@ -1,13 +1,26 @@
 import React from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+import {getUser} from "../../Redux/reducer"
 import axios from "axios";
 
 class Nav extends React.Component{
-   // constructor(props){
-   //    super(props)
-   // }
+   constructor(props){
+      super(props)
+      this.state ={
+         username: "",
+         profile_pic: ""
+      }
+   }
 
+   componentDidMount(){
+      console.log(this.props.user)
+      axios.get("/api/auth/me").then(({data}) => {
+
+         this.setState({username: data[0].username, profile_pic: data[0].profile_pic})
+         console.log(this.state.username)
+      }).catch(err => console.log("nav: ", err))
+   }
    navHandle(event){
       const home = "home",
             newPost = "newPost"
@@ -43,4 +56,4 @@ class Nav extends React.Component{
 }
    const mapStateToProps = (reduxState) => reduxState
 
-export default withRouter(connect(mapStateToProps)(Nav));
+export default withRouter(connect(mapStateToProps, {getUser})(Nav));
