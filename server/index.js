@@ -27,14 +27,14 @@ require("dotenv").config();
    //authentication endpoints
    app.post("/api/auth/register", authCtrl.register);
    app.post("/api/auth/login", authCtrl.login);
-   app.post("/api/auth/logout", authCtrl.logout);
+   app.get("/api/auth/logout", authCtrl.logout);
    app.get("/api/auth/me", authCtrl.getUserInfo)
 
    //user post endpoints
    app.get("/api/posts", postCtrl.getPosts); // remove?
    app.post("/api/posts", postCtrl.createPost);
-   app.get("/api/posts/:userid", postCtrl.getUserPosts);
-   app.delete("/api/post/:postid", postCtrl.deletePost)
+   app.get("/api/posts/?title=", postCtrl.getUserPosts);
+   app.delete("/api/post/:userid", postCtrl.deletePost)
    app.get("/api/post/:postid", postCtrl.getPost);
 
    

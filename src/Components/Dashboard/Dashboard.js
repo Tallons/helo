@@ -7,7 +7,7 @@ class Dashboard extends React.Component {
       super()
       this.state = {
          posts: [],
-         searchValue: "",
+         searchString: "",
          userPosts: true
       };
    }
@@ -23,20 +23,32 @@ class Dashboard extends React.Component {
       })
    };
 
-   searchReset(){
-
-   };
-
+   titleSearch() {
+      const {searchString, userPosts} = this.state
+      console.log("titleSearch Hit")
+      console.log(searchString)
+      console.log(userPosts)
+   axios.get(`/api/posts/?title=${searchString}`, {userPosts}).than(({data}) => {
+      this.setState({ posts: [...data]})
+   })
+   }
 
    render(){
+      {console.log(this.state.userPosts)}
       return(
-         <div> 
+         <div className="dashboard"> 
             <div>
                <input placeholder="name"
-                     name="search"/>
-               <button>Search</button>
-               <button>Reset</button>
+                     name="search"
+                     value={this.state.searchString}
+                     onChange={(event) => this.setState({searchString: event.target.value})}/>
+                     
+               <button onClick={() => this.titleSearch()}>Search</button>
+               <button onClick={() => this.setState({searchString: ""})}>Reset</button>
             </div>
+            <input type="checkbox" checked={this.state.userPosts}
+                   onChange={() => this.setState({userPosts: !this.state.userPosts})}
+                   /><span>My Posts </span>
             {this.state.posts.map((post, index) => {
                return <Link to={`/post/${post.post_id}`}>
                         <div key={index}>
@@ -45,7 +57,6 @@ class Dashboard extends React.Component {
                            <div> {post.content} </div>
                         </div>
                       </Link>
-               
             })}
          </div>
       )

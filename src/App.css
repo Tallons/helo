@@ -1,4 +1,22 @@
 .App {
   text-align: center;
+  display: flex;
 }
 
+.auth{
+  
+}
+
+.nav-bar{
+  height: 500px;
+  width: 100px;
+  background-color: indianred;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard{
+  height: 500px;
+  width: 100%;
+  background-color: cornflowerblue;
+}

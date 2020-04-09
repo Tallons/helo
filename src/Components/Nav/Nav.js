@@ -1,25 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {getUser} from "../../Redux/reducer"
+import {getUserInfo} from "../../Redux/reducer"
 import axios from "axios";
 
 class Nav extends React.Component{
-   constructor(props){
-      super(props)
-      this.state ={
-         username: "",
-         profile_pic: ""
-      }
-   }
+
 
    componentDidMount(){
       console.log(this.props.user)
-      axios.get("/api/auth/me").then(({data}) => {
-
-         this.setState({username: data[0].username, profile_pic: data[0].profile_pic})
-         console.log(this.state.username)
-      }).catch(err => console.log("nav: ", err))
+         getUserInfo() 
    }
    navHandle(event){
       const home = "home",
@@ -46,7 +36,7 @@ class Nav extends React.Component{
    render(){
       console.log(this.props)
       return(
-         <div> 
+         <div className="nav-bar"> 
             <button value="home" onClick={(event)=>this.navHandle(event)}>Home</button>
             <button value="newPost" onClick={(event)=>this.navHandle(event)}>New Post</button>
             <button onClick={()=>this.handleLogout()}>Logout</button>
@@ -54,6 +44,9 @@ class Nav extends React.Component{
       )
    }
 }
-   const mapStateToProps = (reduxState) => reduxState
+   const mapStateToProps = (reduxState) =>{
+      console.log(reduxState)
+     return reduxState 
+   } 
 
-export default withRouter(connect(mapStateToProps, {getUser})(Nav));
+export default withRouter(connect(mapStateToProps, {getUserInfo})(Nav));

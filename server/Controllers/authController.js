@@ -15,7 +15,6 @@ module.exports = {
       let salt = bcrypt.genSaltSync(10),
           hash = bcrypt.hashSync(password, salt),
           newUser = await db.auth.register_user({username, password: hash});
-            req.session.user = newUser[0];
             req.session.userid = newUser[0].user_id;
             console.log(req.session.userid);
             res.status(201).send(req.session.user)
@@ -36,14 +35,15 @@ module.exports = {
          }
 
       delete user[0].password;
-      req.session.user = user[0];
       req.session.userid = user[0].user_id;
       console.log(req.session.userid);
       res.status(202).send(req.session.user);
    },
 
    logout: (req,res) => {
+      console.log(req.session)
       req.session.destroy();
+      console.log(req.session)
       res.sendStatus(200);
    },
 

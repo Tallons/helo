@@ -34,8 +34,28 @@ module.exports ={
    },
 
    getUserPosts: ( req, res) => {
+      const db = req.app.get("db"),
+            {title, author_id} = req.body,
+            {userPosts, searchString} = req.params,
+            {userid} = req.session
 
-      const {id} = req.params
+         if(userPosts && !searchString === ""){
+            db.post.get_my_post_by_title(title, userid)
+               .then(posts => res.status(200).send(posts))
+               .catch(err => res.status(500).send(err))
+         } else if (!userPosts && searchString === ""){
+            db.post.get_other_posts (userid)
+               .then(posts => res.status(200).send(posts))
+               .catch(err => res.status(500).send(err))
+         } else if (!userPosts && !searchString === ""){
+            db.post.get_post_by_title(title, userid)
+               .then(posts => res.status(200).send(posts))
+               .catch(err => res.status(500).send(err))
+         } else {
+            db.post.get_all_posts()
+               .then(posts => res.status(200).send(posts))
+               .catch(err => res.status(500).send(err))
+         }
    }
 
 }

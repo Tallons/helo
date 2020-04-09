@@ -36,7 +36,7 @@ class Auth extends React.Component{
 
    render(){
       return(
-         <div>
+         <div className="Auth">
             <div>
                <h3> Username </h3>
                <input placeholder="username" 
