@@ -21,6 +21,7 @@ class Auth extends React.Component{
    handleLogin = () => {
       const {username, password} = this.state;
       axios.post("/api/auth/login", {username, password}).then(res => {
+         console.log(res.data)
          this.props.getUser(res.data) 
          this.props.history.push("/dashboard")
       }).catch(err => console.log(err))

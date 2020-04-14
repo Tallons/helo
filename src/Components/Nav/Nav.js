@@ -5,11 +5,20 @@ import {getUserInfo} from "../../Redux/reducer"
 import axios from "axios";
 
 class Nav extends React.Component{
-
+   constructor(props){
+      super(props)
+      this.state = {
+         username: "",
+         profile_pic: ""
+      }
+   }
 
    componentDidMount(){
+      getUserInfo()
+         console.log(this.props)
+         // this.setState({})
+      
       console.log(this.props.user)
-         getUserInfo() 
    }
    navHandle(event){
       const home = "home",
@@ -40,13 +49,10 @@ class Nav extends React.Component{
             <button value="home" onClick={(event)=>this.navHandle(event)}>Home</button>
             <button value="newPost" onClick={(event)=>this.navHandle(event)}>New Post</button>
             <button onClick={()=>this.handleLogout()}>Logout</button>
+            {this.props.user.username}
          </div>
       )
    }
 }
-   const mapStateToProps = (reduxState) =>{
-      console.log(reduxState)
-     return reduxState 
-   } 
-
+   const mapStateToProps = (reduxState) => reduxState  
 export default withRouter(connect(mapStateToProps, {getUserInfo})(Nav));

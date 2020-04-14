@@ -9,7 +9,7 @@ module.exports ={
    createPost: (req, res) => {
       const {title, img, content, author_id} = req.body,
             db = req.app.get("db");
-      
+            console.log(req.body);
          db.post.create_post(title, img, content, +author_id)
          .then(() => res.sendStatus(200))
          .catch(err => res.status(500).send(err))

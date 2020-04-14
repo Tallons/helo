@@ -15,8 +15,8 @@ module.exports = {
       let salt = bcrypt.genSaltSync(10),
           hash = bcrypt.hashSync(password, salt),
           newUser = await db.auth.register_user({username, password: hash});
-            req.session.userid = newUser[0].user_id;
-            console.log(req.session.userid);
+            req.session.user = newUser[0];
+            console.log(req.session.user);
             res.status(201).send(req.session.user)
    },
 
@@ -35,8 +35,8 @@ module.exports = {
          }
 
       delete user[0].password;
-      req.session.userid = user[0].user_id;
-      console.log(req.session.userid);
+      req.session.user = user[0];
+      console.log(req.session.user);
       res.status(202).send(req.session.user);
    },
 
@@ -48,11 +48,11 @@ module.exports = {
    },
 
    getUserInfo: (req,res) => {
-      console.log("get User: ", req.session.userid);
-      const {userid} = req.session,
+      console.log("get User: ", req.session.user);
+      const {user} = req.session,
             db = req.app.get("db");
 
-         db.auth.get_user_info(userid)
+         db.auth.get_user_info(user)
          .then(userInfo => {console.log(userInfo), res.status(200).send(userInfo)})
          .catch(err => res.status(500).send(err));
    }
